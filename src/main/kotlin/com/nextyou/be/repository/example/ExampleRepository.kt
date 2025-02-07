@@ -5,9 +5,12 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.data.mongodb.repository.Tailable
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Repository
 interface ExampleRepository : ReactiveMongoRepository<Chat, String> {
     @Tailable
     fun findBySenderAndReceiver(sender: String, receiver: String): Flux<Chat>
+
+    fun save(chat: Chat): Mono<Chat>
 }

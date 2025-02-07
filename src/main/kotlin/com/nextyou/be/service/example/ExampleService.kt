@@ -11,13 +11,13 @@ import reactor.core.scheduler.Schedulers
 class ExampleService(
     private val exampleRepository: ExampleRepository,
 ) {
-    suspend fun getMessage(sender: String, receiver: String): Flux<Chat> {
+    fun getMessage(sender: String, receiver: String): Flux<Chat> {
         println("getMessage")
         return exampleRepository.findBySenderAndReceiver(sender, receiver)
             .subscribeOn(Schedulers.boundedElastic())
     }
 
-    suspend fun save(chat: Chat): Mono<Chat> {
+    fun save(chat: Chat): Mono<Chat> {
         println("save")
         return exampleRepository.save(chat)
     }

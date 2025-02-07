@@ -1,9 +1,11 @@
 package com.nextyou.be.controller.example
 
 import com.nextyou.be.entity.Chat
+import com.nextyou.be.entity.Test
 import com.nextyou.be.service.example.ExampleService
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -15,7 +17,7 @@ class ExampleController(
     private val exampleService: ExampleService,
 ) {
     @GetMapping("/sender/{sender}/receiver/{receiver}", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    suspend fun getMessage(
+    fun getMessage(
         @PathVariable sender: String,
         @PathVariable receiver: String,
     ): Flux<Chat> {
@@ -23,7 +25,17 @@ class ExampleController(
     }
 
     @PostMapping("/chat")
-    suspend fun sendMessage(@RequestBody chat: Chat): Mono<Chat> {
+    fun sendMessage(@RequestBody chat: Chat): Mono<Chat> {
+        println("hello")
         return exampleService.save(chat)
+    }
+
+
+    @GetMapping("/test")
+    fun test(): ResponseEntity<Test> {
+        return ResponseEntity.ok(Test(
+            name = "koo",
+            age = 18,
+        ))
     }
 }
